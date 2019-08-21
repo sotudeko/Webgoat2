@@ -5,7 +5,7 @@ pipeline {
     environment {
         ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
         DEV_REPO = 'staging-dev'
-        TAG_FILE = "${WORKSPACE}/tag.json"
+        METADATA_FILE = "${WORKSPACE}/metadata.json"
         IQ_APP_NAME = "webgoat2"
         IQ_URL = "http://localhost:8070"
         IQ_STAGE = "build"
@@ -25,12 +25,14 @@ pipeline {
             }
         }
 
-        stage('Get Commit hash'){
+        stage('Create metadata file'){
             steps {
-                // export COMMIT=$(git rev-parse HEAD); echo "{\"commitHash\": \"${COMMIT}\"}" > metadata.json
-                //GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-                //echo "Git commit hash: ${GIT_COMMIT_HASH}"
-                echo "Git commit hash: ${GIT_COMMIT}"
+                // construct the meta data (Pipeline Utility Steps plugin)
+                def metadata = readJSON text: '{}' 
+                metadata.commitHash = "${GIT_COMMIT}" as String
+                    
+                writeJSON(file: "${METADATA_FILE}", json: metadata, pretty: 4)
+                sh 'cat ${METADATA_FILE}'
             }
         } 
 
