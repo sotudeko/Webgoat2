@@ -4,6 +4,7 @@ pipeline {
     stages {
 
         // stage('Code Quality Scan') {
+        // Using SonarQube
         //     dir('./webgoat'){
         //         sh "mvn sonar:sonar -Dsonar.host.url=http://localhost:9000"
         //     }
