@@ -26,10 +26,12 @@ pipeline {
         }
 
         stage('Get Commit hash'){
-            // export COMMIT=$(git rev-parse HEAD); echo "{\"commitHash\": \"${COMMIT}\"}" > metadata.json
-            //GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-            echo "Git commit hash: ${GIT_COMMIT_HASH}"
-            echo "Git commit hash: ${GIT_COMMIT}"
+            steps {
+                // export COMMIT=$(git rev-parse HEAD); echo "{\"commitHash\": \"${COMMIT}\"}" > metadata.json
+                //GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+                echo "Git commit hash: ${GIT_COMMIT_HASH}"
+                echo "Git commit hash: ${GIT_COMMIT}"
+            }
         } 
 
         stage('Nexus IQ Scan'){
