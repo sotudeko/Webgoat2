@@ -79,7 +79,7 @@ public class HammerHead extends HttpServlet {
     /**
      * Set the session timeout to be 2 days
      */
-    private final static int sessionTimeoutSeconds = 60 * 60 * 24 * 2;
+    private final static int sessionTimeoutSeconds = 60 * 60 * 24 * 3;
 
     // private final static int sessionTimeoutSeconds = 1;
     /**
