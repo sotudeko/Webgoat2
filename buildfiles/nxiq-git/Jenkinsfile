@@ -9,7 +9,7 @@ pipeline {
         IQ_URL = "http://localhost:8070"
         IQ_STAGE = "build"
         IQ_CLI = "/opt/nxiq/nexus-iq-cli"
-        BUILD_VERSION = 1.1
+        BUILD_VERSION = 1.2
     }
 
     stages {
