@@ -4,7 +4,6 @@ pipeline {
 
     environment {
         ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
-        DEV_REPO = 'staging-dev'
         METADATA_FILE = "${WORKSPACE}/metadata.json"
         IQ_APP_NAME = "webgoat2"
         IQ_URL = "http://localhost:8070"
@@ -27,12 +26,14 @@ pipeline {
 
         stage('Create metadata file'){
             steps {
-                // construct the meta data (Pipeline Utility Steps plugin)
-                def metadata = readJSON text: '{}' 
-                metadata.commitHash = "${GIT_COMMIT}" as String
-                    
-                writeJSON(file: "${METADATA_FILE}", json: metadata, pretty: 4)
-                sh 'cat ${METADATA_FILE}'
+                script {
+                    // construct the meta data (Pipeline Utility Steps plugin)
+                    def metadata = readJSON text: '{}' 
+                    metadata.commitHash = "${GIT_COMMIT}" as String
+                        
+                    writeJSON(file: "${METADATA_FILE}", json: metadata, pretty: 4)
+                    sh 'cat ${METADATA_FILE}'
+                }
             }
         } 
 
