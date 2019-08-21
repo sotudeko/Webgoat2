@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    def docker_registry="nexus.mydomain.err:5000"
+    def clair_endpoint="https://nexus.mydomain.err:6060"
+    def image_name="uis-cam/endpoint-heartbeat"
+    def es_version="6.0.0"
+    def full_image_name = "${docker_registry}/${image_name}:${es_version}"
+    def heartbeat
+
+    stages {
+
+        // stage('Code Quality Scan') {
+        //     dir('./webgoat'){
+        //         sh "mvn sonar:sonar -Dsonar.host.url=http://localhost:9000"
+        //     }
+        // }
+
+        stage('Build') {
+            steps {
+                // sh 'mvn -Dmaven.test.failure.ignore clean package'
+                sh 'mvn -Dmaven.test.failure.ignore clean package com.sonatype.clm:clm-maven-plugin:evaluate -Dclm.additionalScopes=test,provided,system -Dclm.applicationId=webgoat-legacy -Dclm.serverUrl=http://localhost:8070 -Dclm.username=admin -Dclm.password=admin123'
+
+            }
+            post {
+                success {
+                    echo 'Now archiving...'
+                    archiveArtifacts artifacts: "**/target/*.war"
+                }
+            }
+        }
+
+        stage('Clair Test') {
+            sh 'wget -nv -O klar http://artifactory.prod.cu.edu/artifactory/ext-archive-local/optiopay/klar/1.5/klar-1.5-linux-amd64'
+            sh 'chmod u+x klar'
+            def statusCode = sh script:"CLAIR_ADDR=${clair_endpoint} ./klar ${full_image_name}", returnStatus:true
+            if (statusCode!=0) {
+                currentBuild.result = 'FAILURE'
+                error "Docker Image did not pass Clair testing."
+            }
+        }
+
+    }
+}
+

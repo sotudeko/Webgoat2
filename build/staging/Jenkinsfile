@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+
+    environment {
+        PROD_REPO = 'staging-prod'
+    }
+
+    stages {
+        stage('Move tag components'){
+            steps {
+                script {
+
+                    moveComponents destination: "${PROD_REPO}", nexusInstanceId: 'nxrm3', tagName: "${TAG}"
+
+                }
+            }
+        }
+    }
+}
+
