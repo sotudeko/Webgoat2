@@ -4,7 +4,7 @@ pipeline {
 
     environment {
         ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
-        CREDS= 'admin'
+        CREDS = 'admin'
     }
 
     stages {
@@ -26,8 +26,10 @@ pipeline {
                 
                     try {
                         echo "Job name: ${JOB_NAME}"
-                        // def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${JOB_NAME}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
-                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: 'my-auto-app', iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: 'build', jobCredentialsId: 'admin'
+                        applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
+                        echo "Application name: ${JOBapplicationName_NAME}"
+
+                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${applicationName}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
                         echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
                         IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
                     } 
