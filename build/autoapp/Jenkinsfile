@@ -25,13 +25,10 @@ pipeline {
                 script{
                 
                     try {
-                        echo "Job name: ${JOB_NAME}"
-                        applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
-                        echo "Application name: ${applicationName}"
-
+                        def applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
                         def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${applicationName}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
                         echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
-                        IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
+                        // IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
                     } 
                     catch (error) {
                         def policyEvaluation = error.policyEvaluation
