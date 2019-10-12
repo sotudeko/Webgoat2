@@ -24,7 +24,7 @@ pipeline {
                 script{
                 
                     try {
-                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: selectedApplication('webgoat-autoapp'), iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: 'build', jobCredentialsId: 'admin'
+                        iqApplication: 'SampApp', iqStage: 'build'nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: ${JOB_NAME}, iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: ${BUILD_STAGE}, jobCredentialsId: 'admin'
                         echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
                         IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
                     } 
