@@ -23,7 +23,7 @@ pipeline {
 
         stage('IQ Application Configuration'){
             steps {
-                build job: IQ_Application_Setup
+                build job: 'IQ_Application_Setup'
             }
         }
 
