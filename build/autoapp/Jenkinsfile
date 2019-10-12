@@ -6,8 +6,8 @@ pipeline {
         ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
         CREDS = 'admin'
         IQ_ORGANISATION = "${JOB_NAME}".substring(0, "${JOB_NAME}".indexOf('/'))
-        IQ_APPLICATION = "${JOB_NAME}".substring("${JOB_NAME}".indexOf('/')+1)
-        IQ_APPLICATION = "${IQ_APPLICATION}".replaceAll(~/\//, "_")
+        IQ_APPLICATION = ("${JOB_NAME}".substring("${JOB_NAME}".indexOf('/')+1)).replaceAll(~/\//, "_")
+        //IQ_APPLICATION = "${IQ_APPLICATION}".replaceAll(~/\//, "_")
     }
 
     stages {
