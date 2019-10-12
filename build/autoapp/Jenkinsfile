@@ -5,6 +5,7 @@ pipeline {
     environment {
         ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
         CREDS = 'admin'
+        IQ_ORGANISATION = "${JOB_NAME}".substring(0, "${JOB_NAME}".indexOf('/'))
         IQ_APPLICATION = "${JOB_NAME}".replaceAll(~/\//, "_")
     }
 
@@ -23,7 +24,7 @@ pipeline {
 
         stage('IQ Application Configuration'){
             steps {
-                build job: 'IQ_Application_Setup', parameters: [[$class: 'StringParameterValue', IQ_ORGANISATION: 'systemname', IQ_APPLICATION: systemname]]
+                build job: 'IQ_Application_Setup', parameters: [string(name: 'IQ_ORGANISATION', value: "${IQ_ORGANISATION}"), string(name: "${IQ_APPLICATION}", value: 'def')], quietPeriod: 2
             }
         }
 
