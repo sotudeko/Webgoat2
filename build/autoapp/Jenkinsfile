@@ -23,7 +23,7 @@ pipeline {
 
         stage('IQ Application Configuration'){
             steps {
-                build job: 'IQ_Application_Setup' parameters: [[$class: 'StringParameterValue', IQ_ORGANISATION: 'systemname', IQ_APPLICATION: systemname]]
+                build job: 'IQ_Application_Setup', parameters: [[$class: 'StringParameterValue', IQ_ORGANISATION: 'systemname', IQ_APPLICATION: systemname]]
             }
         }
 
