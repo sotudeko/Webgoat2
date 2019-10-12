@@ -24,7 +24,7 @@ pipeline {
 
         stage('IQ Application Configuration'){
             steps {
-                build job: 'IQ_Application_Setup', parameters: [string(name: 'IQ_ORGANISATION', value: "${IQ_ORGANISATION}"), string(name: "${IQ_APPLICATION}", value: 'def')], quietPeriod: 2
+                build job: 'IQ_Application_Setup', parameters: [string(name: 'IQ_ORGANISATION', value: "${IQ_ORGANISATION}"), string(name: "${IQ_APPLICATION}", value: "${IQ_APPLICATION}")]
             }
         }
 
