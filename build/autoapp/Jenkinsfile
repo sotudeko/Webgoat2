@@ -24,17 +24,20 @@ pipeline {
             steps {
                 script{
                 
-                    try {
-                        def applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
-                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${applicationName}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
-                        // echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
-                        // IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
-                    } 
-                    catch (error) {
-                        def policyEvaluation = error.policyEvaluation
-                        echo "Nexus IQ scan vulnerabilities detected', ${policyEvaluation.applicationCompositionReportUrl}"
-                        throw error
-                    }
+                    def applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
+                    def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${applicationName}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
+                        
+                    // try {
+                    //     def applicationName = "${JOB_NAME}".replaceAll(~/\//, "_")
+                    //     def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${applicationName}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
+                    //     echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
+                    //     IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
+                    // } 
+                    // catch (error) {
+                    //     def policyEvaluation = error.policyEvaluation
+                    //     echo "Nexus IQ scan vulnerabilities detected', ${policyEvaluation.applicationCompositionReportUrl}"
+                    //     throw error
+                    // }
                 }
             }
         }
