@@ -25,7 +25,9 @@ pipeline {
                 script{
                 
                     try {
-                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${JOB_NAME}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
+                        echo "Job name: ${JOB_NAME}"
+                        // def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${JOB_NAME}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
+                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: 'my-auto-app', iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: 'build', jobCredentialsId: 'admin'
                         echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
                         IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
                     } 
