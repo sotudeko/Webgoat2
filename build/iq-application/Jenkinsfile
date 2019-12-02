@@ -1,0 +1,70 @@
+
+pipeline {
+    agent any
+
+    environment {
+		IQ_ORGANISATION_ID = 'unknown'
+		IQ_NEW_ORGANISATION_INFO_FILE = './new_organisation.json'
+		IQ_EXISTING_ORGANISATIONS_INFO_FILE = './existing_organisations.json'
+    }
+
+    stages {
+        stage('Preparation') {
+			steps {
+				echo "Hello from Nexus-IQ pipeline"
+				echo "${IQ_ORGANISATION}"
+				echo "${IQ_APPLICATION}"
+			}
+		}
+		
+		stage('Create Nexus IQ Organisation'){
+			steps {
+				script {
+					 
+					 // Create the organisation 
+                    def response = sh returnStdout: true, script: "curl -s -u admin:admin123 -X POST -w %{http_code} -o ${IQ_NEW_ORGANISATION_INFO_FILE} -H 'Content-Type: application/json' -d '{\"name\": \"${IQ_ORGANISATION}\"}' http://localhost:8070/api/v2/organizations"
+						
+					if (response == '200' || response == '201') {
+
+						// Newly created. Get its id
+ 						def org = readJSON file: "${IQ_ORGANISATION_INFO_FILE}"
+ 
+						IQ_ORGANISATION_ID = org.id 
+						echo "org id: ${IQ_ORGANISATION_ID}"
+					}
+					else {
+						// It already exists. Get its id
+						echo "Returned status code = [${response}]"
+
+						def status = sh returnStdout: true, script: "curl -u admin:admin123 -X GET -o ${IQ_EXISTING_ORGANISATIONS_INFO_FILE} 'http://localhost:8070/api/v2/organizations'"
+						def organisations = readJSON file: "${IQ_EXISTING_ORGANISATIONS_INFO_FILE}"
+
+						organisations.organizations.each { item ->
+
+							if ("${item.name}" == "${IQ_ORGANISATION}"){
+								echo "found existing org: ${item.id} ${item.name}"
+								IQ_ORGANISATION_ID = "${item.id}"
+							}
+						}
+					}
+				}
+			}
+		}
+
+		stage('Create Nexus IQ Application'){
+			steps {
+				script {
+					try {
+                        def response = sh returnStdout: true, script: "curl -s -u admin:admin123 -X POST -H 'Content-Type: application/json' -d '{\"publicId\": \"${IQ_APPLICATION}\",\"name\": \"${IQ_APPLICATION}\",\"organizationId\":\"${IQ_ORGANISATION_ID}\"}' http://localhost:8070/api/v2/applications"
+						echo "${response}"
+                    }
+                    catch (error) {
+                        throw error
+                    }
+				}
+			}
+		}
+	}
+}
+
+

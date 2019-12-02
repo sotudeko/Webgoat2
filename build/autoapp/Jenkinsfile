@@ -7,7 +7,6 @@ pipeline {
         CREDS = 'admin'
         IQ_ORGANISATION = "${JOB_NAME}".substring(0, "${JOB_NAME}".indexOf('/'))
         IQ_APPLICATION = ("${JOB_NAME}".substring("${JOB_NAME}".indexOf('/')+1)).replaceAll(~/\//, "_")
-        //IQ_APPLICATION = "${IQ_APPLICATION}".replaceAll(~/\//, "_")
     }
 
     stages {
@@ -29,32 +28,32 @@ pipeline {
             }
         }
 
-        // stage('Nexus IQ Scan'){
-        //     steps {
-        //         script{
+        stage('Nexus IQ Scan'){
+            steps {
+                script{
 
-        //             try {
-        //                 def response = sh returnStdout: true, script: 'curl -u admin:admin123 -X GET http://localhost:8070/api/v2/applications?publicId=Autoapps_Build-Auto-pp'
-        //                 echo "${response}"
-        //             }
-        //             catch (error) {
-        //                 throw error
-        //             }
+                    try {
+                        def response = sh returnStdout: true, script: 'curl -u admin:admin123 -X GET http://localhost:8070/api/v2/applications?publicId=Autoapps_Build-Auto-pp'
+                        echo "${response}"
+                    }
+                    catch (error) {
+                        throw error
+                    }
 
                 
-        //             try {
-        //                 def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${IQ_APPLICATION}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
-        //                 echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
-        //                 IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
-        //             } 
-        //             catch (error) {
-        //                 def policyEvaluation = error.policyEvaluation
-        //                 echo "Nexus IQ scan vulnerabilities detected', ${policyEvaluation.applicationCompositionReportUrl}"
-        //                 throw error
-        //             }
-        //         }
-        //     }
-        // }
+                    try {
+                        def policyEvaluation = nexusPolicyEvaluation failBuildOnNetworkError: true, iqApplication: "${IQ_APPLICATION}", iqScanPatterns: [[scanPattern: '**/*.war']], iqStage: "${IQ_STAGE}", jobCredentialsId: "${CREDS}"
+                        echo "Nexus IQ scan succeeded: ${policyEvaluation.applicationCompositionReportUrl}"
+                        IQ_SCAN_URL = "${policyEvaluation.applicationCompositionReportUrl}"
+                    } 
+                    catch (error) {
+                        def policyEvaluation = error.policyEvaluation
+                        echo "Nexus IQ scan vulnerabilities detected', ${policyEvaluation.applicationCompositionReportUrl}"
+                        throw error
+                    }
+                }
+            }
+        }
     }
 }
 
