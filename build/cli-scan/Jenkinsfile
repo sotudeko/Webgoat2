@@ -27,7 +27,7 @@ pipeline {
 
         stage('Nexus IQ Scan'){
             steps {
-                sh 'java -jar ${IQ_CLI} -i ${IQ_APP_NAME} -s ${IQ_URL} -a admin:admin123 -t ${IQ_STAGE} -m ${METADATA_FILE} ${ARTEFACT_NAME}'
+                sh 'java -jar ${IQ_CLI} -w -i ${IQ_APP_NAME} -s ${IQ_URL} -a admin:admin123 -t ${IQ_STAGE} -m ${METADATA_FILE} ${ARTEFACT_NAME}'
             }
         }        
     }
