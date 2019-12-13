@@ -3,17 +3,17 @@ pipeline {
     agent any
 
     environment {
-        ARTEFACT_NAME = "${WORKSPACE}/target/WebGoat-${BUILD_VERSION}.war"
-        DEV_REPO = 'staging-dev'
         TAG_FILE = "${WORKSPACE}/tag.json"
         IQ_SCAN_URL = ""
+        PLUGIN_PATH = "${WORKSPACE}/${PLUGIN_NAME}.hpi"
         PLUGIN_IDEX = "https://updates.jenkins-ci.org/download/plugins"
+        PLUGIN_REPO = 'jenkins-plugins'
     }
 
     stages {
         stage('Build') {
             steps {
-                sh 'wget https://updates.jenkins-ci.org/download/plugins/GatekeeperPlugin/3.0.5/GatekeeperPlugin.hpi'
+                sh "wget ${PLUGIN_IDEX}/${PLUGIN_NAME}/${PLUGIN_VERSION}/${PLUGIN_NAME}.hpi"
             }
             post {
                 success {
