@@ -46,9 +46,9 @@ steps:
   inputs:
     script: 'ls -l'
     
-# - task: CmdLine@2
-#   inputs:
-#     script: 'bash nexus-iq-cli -v'
+- task: CmdLine@2
+  inputs:
+    script: 'nexus-iq-cli -v'
 
 # - task: CmdLine@2
 #   inputs:
