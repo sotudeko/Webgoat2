@@ -45,7 +45,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'ls -l'
+    script: 'ls -lrt && ls -lrt target'
     displayName: List files
     
 - task: CmdLine@2
