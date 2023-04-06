@@ -23,17 +23,20 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
+    
+- task: CmdLine@2
+  inputs:
+    script: |
+          wget -qO- https://repo.sonatype.com/repository/sonatype-hosted/pki/deb-gpg/GPG-KEY-sonatype-apt-hosted.asc | \
+          gpg --dearmor | \
+          sudo tee /usr/share/keyrings/sonatype-apt-hosted.gpg >/dev/null
 - task: CmdLine@2
   inputs:
     script: 'ls -l'
     
-# - task: CmdLine@2
-#   inputs:
-#     script: 'bash nexus-iq-cli -v'
-
 - task: CmdLine@2
   inputs:
-    script: 'bash nexus-iq-scan.sh'
+    script: 'bash nexus-iq-cli -v'
 
 # - task: CmdLine@2
 #   inputs:
