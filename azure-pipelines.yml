@@ -34,8 +34,7 @@ steps:
 - task: CmdLine@2
   inputs:
     script: |
-         sudo wget -P /etc/apt/sources.list.d/ | \
-         https://repo.sonatype.com/repository/sonatype-hosted/deb/sonatype-hosted.list
+         sudo wget -P /etc/apt/sources.list.d/ https://repo.sonatype.com/repository/sonatype-hosted/deb/sonatype-hosted.list
     displayName: Add the repository to your sources
     
 - task: CmdLine@2
