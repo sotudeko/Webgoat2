@@ -30,17 +30,12 @@ steps:
           wget -qO- https://repo.sonatype.com/repository/sonatype-hosted/pki/deb-gpg/GPG-KEY-sonatype-apt-hosted.asc | \
           gpg --dearmor | \
           sudo tee /usr/share/keyrings/sonatype-apt-hosted.gpg >/dev/null
-    displayName: Download the public GPG signing key and add the key to your apt sources keyring
-- task: CmdLine@2
-  inputs:
+    
     script: |
          sudo wget -P /etc/apt/sources.list.d/ https://repo.sonatype.com/repository/sonatype-hosted/deb/sonatype-hosted.list
-    displayName: Add the repository to your sources
     
-- task: CmdLine@2
-  inputs:
     script: sudo apt-get update && sudo apt-get install nexus-iq-cli
-    displayName: Install the application via apt-get    
+    displayName: Install Nexus IQ CLI    
 
 - task: CmdLine@2
   inputs:
