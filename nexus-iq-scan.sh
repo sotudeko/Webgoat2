@@ -3,4 +3,4 @@
 echo Hello World
 echo running Nexus IQ scan
 
-$(NEXUS_IQ_CLI) -s $(NEXUS_IQ_URL) -a $(NEXUS_IQ_USER):$(NEXUS_IQ_PWD) -i $(APPLICATION_NAME) $(SCAN_TARGET)
+nexus-iq-cli -s http://localhost:8070 -a zwwu7vYv:zwwu7vYv -i webgoat2 target/WebGoat-*.war
