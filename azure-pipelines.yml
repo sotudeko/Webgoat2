@@ -23,9 +23,6 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-- task: AzureCLI@2
+- task: CmdLine@2
   inputs:
-    scriptType: 'bash'
-    scriptLocation: 'scriptPath'
-    scriptPath: './'
-    arguments: 'ls -l target'
+    script: 'ls -l'
