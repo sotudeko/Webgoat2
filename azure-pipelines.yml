@@ -32,5 +32,6 @@ steps:
     script: './nexus-iq-cli -v'
 
 - task: CmdLine@2
-  inputs: $(NEXUS_IQ_CLI) -s $(NEXUS_IQ_URL) -a $(NEXUS_IQ_USER):$(NEXUS_IQ_PWD) $(SCAN_TARGET)
+  inputs: 
+    script: $(NEXUS_IQ_CLI) -s $(NEXUS_IQ_URL) -a $(NEXUS_IQ_USER):$(NEXUS_IQ_PWD) $(SCAN_TARGET)
     
