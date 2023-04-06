@@ -11,18 +11,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-# - task: Maven@4
-#   inputs:
-#     mavenPomFile: 'pom.xml'
-#     goals: 'clean package'
-#     publishJUnitResults: true
-#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-#     jdkVersionOption: '1.8'
-#     javaHomeOption: 'JDKVersion'
-#     mavenVersionOption: 'Default'
-#     mavenAuthenticateFeed: false
-#     effectivePomSkip: false
-#     sonarQubeRunAnalysis: false
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean package'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    jdkVersionOption: '1.8'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+   sonarQubeRunAnalysis: false
     
 - task: CmdLine@2
   inputs:
@@ -56,5 +56,5 @@ steps:
 - task: CmdLine@2
   inputs:
    script: $(NEXUS_IQ_CLI) -s $(NEXUS_IQ_URL) -a $(NEXUS_IQ_USER):$(NEXUS_IQ_PWD) -i $(APPLICATION_NAME) $(SCAN_TARGET)
-   displayName:Run Nexus IQ scan
+   displayName: Run Nexus IQ scan
     
