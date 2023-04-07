@@ -24,6 +24,9 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
     
+# get the standalone Nexus IQ CLI
+# https://help.sonatype.com/iqserver/integrations/nexus-iq-cli#NexusIQCLI-Linux
+
 - task: CmdLine@2
   inputs:
     script: |
