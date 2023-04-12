@@ -56,6 +56,7 @@ steps:
     script: $(NEXUS_IQ_CLI) -v
     displayName: Check Nexus IQ CLI version
 
+# nexus-iq-cli -s http://localhost:8070 -a admin:admin123 -i webgoat2 target/WebGoat-*.war
 - task: CmdLine@2
   inputs:
    script: $(NEXUS_IQ_CLI) -s $(NEXUS_IQ_URL) -a $(NEXUS_IQ_USER):$(NEXUS_IQ_PWD) -i $(APPLICATION_NAME) $(SCAN_TARGET)
