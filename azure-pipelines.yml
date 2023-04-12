@@ -25,6 +25,8 @@ steps:
     sonarQubeRunAnalysis: false
     
 # get the standalone Nexus IQ CLI
+#### - replace with your own method for bringing in the Nexus IQ CLI
+#### start - get the standalone Nexus IQ CLI
 # https://help.sonatype.com/iqserver/integrations/nexus-iq-cli#NexusIQCLI-Linux
 
 - task: CmdLine@2
@@ -45,6 +47,9 @@ steps:
   inputs:
     script: sudo apt-get update && sudo apt-get install nexus-iq-cli
     displayName: Install the application via apt-get    
+
+#### end - get the standalone Nexus IQ CLI
+
 
 - task: CmdLine@2
   inputs:
