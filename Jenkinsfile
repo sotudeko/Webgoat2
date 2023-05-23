@@ -101,7 +101,7 @@ pipeline {
                         nexusRepositoryId: "${DEV_REPO}", 
                         packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'xml', filePath: "${BOM_FILE}"], 
                                                                              [classifier: '', extension: 'war', filePath: "${ARTEFACT_NAME}"]], 
-                        mavenCoordinate: [artifactId: 'WebGoat', groupId: 'org.webgoat4', packaging: 'war', version: "${BUILD_VERSION}"]]], 
+                        mavenCoordinate: [artifactId: 'WebGoat', groupId: 'org.webgoat2', packaging: 'war', version: "${BUILD_VERSION}"]]], 
                         tagName: "${BUILD_TAG}"
                 }
             }
